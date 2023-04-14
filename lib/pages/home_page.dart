@@ -14,18 +14,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
+  //veri tabanı ornegı olusturuyoruz
   HabitDatabase db = HabitDatabase();
   final _myBox = Hive.box("Habit_Database");
 
+  //kullanıcının uygulmaya ilk kezmı acıp acmadıgını  konttrol edıyoruz
+ //bunun için veri tabanımızda zaten bir liste olup olmadıgına bakkıyoruz  
+  
   @override
   void initState() {
-    // mevcut bir alışkanlık listesi yoksa, uygulamayı ilk kez açıyorsunuz
+    // egerbir liste yoksa, uygulamayı ilk kez açmak anlamına gelıyor
     // ardından varsayılan verileri oluştur
     if (_myBox.get("CURRENT_HABIT_LIST") == null) {
       db.createDefaultData();
     }
 
-// zaten veri var, bu ilk değil
+// zaten verimiz varsa 
     else {
       db.loadData();
     }

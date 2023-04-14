@@ -44,7 +44,7 @@ class HabitDatabase {
 //bilgilerin degısmesı sonucunda alışkanlık listesini guncelle
     _myBox.put("CURRENT_HABIT_LIST", todaysHabitList);
 
-    // calculate habit complete percentages for each day
+// her gün için alışkanlık tamamlama yüzdelerini hesapla
     calculateHabitPercentages();
 
     // load heat map
@@ -64,7 +64,7 @@ class HabitDatabase {
         : (countCompleted / todaysHabitList.length).toStringAsFixed(1);
 
     // key: "PERCENTAGE_SUMMARY_yyyymmdd"
-    // value: string of 1dp number between 0.0-1.0 inclusive
+    // value:0,0 ve 1,0 arası ondalık sayı
     _myBox.put("PERCENTAGE_SUMMARY_${todaysDateFormatted()}", percent);
   }
 
@@ -85,8 +85,8 @@ class HabitDatabase {
         _myBox.get("PERCENTAGE_SUMMARY_$yyyymmdd") ?? "0.0",
       );
 
-      // split the datetime up like below so it doesn't worry about hours/mins/secs etc.
-
+// tarihi boluyotuz
+      
       // year
       int year = startDate.add(Duration(days: i)).year;
 
@@ -99,7 +99,8 @@ class HabitDatabase {
       final percentForEachDay = <DateTime, int>{
         DateTime(year, month, day): (10 * strengthAsPercent).toInt(),
       };
-
+//Isı Haritası Veri Kümesi . Girişleri ekleyin (Her Gün girişlerinin yüzdesi);
+      
       heatMapDataSet.addEntries(percentForEachDay.entries);
       print(heatMapDataSet);
     }

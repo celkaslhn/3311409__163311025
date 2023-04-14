@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  // checkbox was tapped
+  // onay kutucuguna dokunuyoruz ve veritbanından bugunun lıstesıne gıdıyor vve guncellıyoruz
   void checkBoxTapped(bool? value, int index) {
     setState(() {
       db.todaysHabitList[index][1] = value;
@@ -49,10 +49,10 @@ class _HomePageState extends State<HomePage> {
     db.updateDatabase();
   }
 
-  // create a new habit
+  //yenı alıskanlık eklıyoruz 
   final _newHabitNameController = TextEditingController();
   void createNewHabit() {
-    // kullanıcının yeni alışkanlık ayrıntılarını girmesi için uyarı iletişim kutusunu göster
+    // kullanıcının yeni alışkanlık ayrıntılarını girmesi için uyarı iletişim kutusunu görüyoruz 
     showDialog(
       context: context,
       builder: (context) {
@@ -66,14 +66,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  // save new habit
+  //  alıkanlıgı kayıtetme
   void saveNewHabit() {
-// bugünün alışkanlık listesine yeni bir alışkanlık ekle
+// bugünün alışkanlık listesine yeni bir alışkanlık ekliyoruz
     setState(() {
       db.todaysHabitList.add([_newHabitNameController.text, false]);
     });
 
-    // clear textfield
+    // metnı temızlıyoruz
     _newHabitNameController.clear();
     // pop dialog box
     Navigator.of(context).pop();
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
     db.updateDatabase();
   }
 
-  // delete habit
+  // alışkanlıgı sıl 
   void deleteHabit(int index) {
     setState(() {
       db.todaysHabitList.removeAt(index);
@@ -127,9 +127,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.red[300],
       floatingActionButton: MyFloatingActionButton(onPressed: createNewHabit),
+      //alışkanlık lıstesını aldık yenı bır lısteye koyduk lıstenınn basınada aylık ısı harıtası eklıyoruz
       body: ListView(
         children: [
-          // monthly summary heat map
+          // aylık ısı harıtası
           MonthlySummary(
             datasets: db.heatMapDataSet,
             startDate: _myBox.get("START_DATE"),
@@ -138,7 +139,7 @@ class _HomePageState extends State<HomePage> {
           // list of habits
           ListView.builder(
             shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),// harıtayı yana kaydırmamam a durumu 
             itemCount: db.todaysHabitList.length,
             itemBuilder: (context, index) {
               return HabitTile(

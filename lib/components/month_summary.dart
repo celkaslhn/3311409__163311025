@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_heatmap_calendar/flutter_heatmap_calendar.dart';
 import 'package:habittrackertute/datetime/date_time.dart';
 
+//ısı harıtası olusturabılmek ıcın flutter heatmap calender kutuphanesını kullandım .
+//buradakı kodları kutphanenın örnek kodundan yararlandım
+
+
 class MonthlySummary extends StatelessWidget {
   final Map<DateTime, int>? datasets;
   final String startDate;

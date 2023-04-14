@@ -3,10 +3,10 @@ import 'package:habittrackertute/pages/home_page.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
-  // initialize hive
+  //başlangıc komutu
   await Hive.initFlutter();
 
-  // open a box
+  // kutucuk açıyoruz
   await Hive.openBox("Habit_Database");
 
   runApp(const MyApp());

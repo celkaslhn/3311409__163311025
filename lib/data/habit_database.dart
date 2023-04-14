@@ -1,14 +1,15 @@
 import 'package:habittrackertute/datetime/date_time.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
-// reference our box
+//öncelikle bir hive kutusu açıyoruz
 final _myBox = Hive.box("Habit_Database");
 
 class HabitDatabase {
   List todaysHabitList = [];
   Map<DateTime, int> heatMapDataSet = {};
 
-  // create initial default data
+  // eger uygulamayı ilk kullanıyorsak 
+  //varsayılan degerler olusturyoruz
   void createDefaultData() {
     todaysHabitList = [
       ["Run", false],
@@ -18,28 +19,29 @@ class HabitDatabase {
     _myBox.put("START_DATE", todaysDateFormatted());
   }
 
-  // load data if it already exists
+  //uygulama ilk açışımı değilmi konttrol edıyoruz
   void loadData() {
-    // if it's a new day, get habit list from database
+//eger yenı bır gunse olusturdugumuz alışkanlık listesini verıtabanından alıyoruz
     if (_myBox.get(todaysDateFormatted()) == null) {
       todaysHabitList = _myBox.get("CURRENT_HABIT_LIST");
-      // set all habit completed to false since it's a new day
+
+      //yeni gün oldugu ıcın bıten tum alıskanlıkları false olsrsk sysrlıyoruz
       for (int i = 0; i < todaysHabitList.length; i++) {
         todaysHabitList[i][1] = false;
       }
     }
-    // if it's not a new day, load todays list
+//yenı gunn degılse bugunun lıstesını yukluyoruz
     else {
       todaysHabitList = _myBox.get(todaysDateFormatted());
     }
   }
 
-  // update database
+  // veritabanını guncelleyıyoruz
   void updateDatabase() {
-    // update todays entry
+//bugunun gırısı 
     _myBox.put(todaysDateFormatted(), todaysHabitList);
 
-    // update universal habit list in case it changed (new habit, edit habit, delete habit)
+//bilgilerin degısmesı sonucunda alışkanlık listesini guncelle
     _myBox.put("CURRENT_HABIT_LIST", todaysHabitList);
 
     // calculate habit complete percentages for each day
